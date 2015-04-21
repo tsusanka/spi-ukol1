@@ -8,7 +8,6 @@ n = K*20
 # The Uniform Distribution
 u = runif(n, 0, 1)
 u
-hist(u, main="Histogram hodnot u")
 
 # 1.I
 # https://en.wikipedia.org/wiki/Exponential_distribution#Generating_exponential_variates
@@ -17,6 +16,8 @@ x=-log(1-u)/L
 x
 
 # 1.II
+hist(u, main="Histogram hodnot u")
+
 hist(x, probability=TRUE, main="Histogram hodnot x ")
 xWidth=max(x)-min(x)
 xGrid=seq(min(x)-0.2*xWidth,max(x)+0.2*xWidth,length=n)
