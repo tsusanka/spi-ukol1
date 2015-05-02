@@ -81,10 +81,10 @@ t.test(x, mu=10, alternative = "less", conf.level = 1-alpha);
 ################################################################################
 
 n = 20;
-alpha = 0.01
-x = rnorm(n, mean=10, sd=1)
-error = rnorm(n, mean=0.5, sd=0.8306624)
-y = x + error
+alpha = 0.01;
+x = rnorm(n, mean=10, sd=1);
+error = rnorm(n, mean=0.5, sd=0.8306624);
+y = x + error;
 
 tTestPair = t.test(x, y=y, paired = TRUE, alternative = "less", conf.level = 1-alpha)
 print(tTestPair)
@@ -94,7 +94,7 @@ intervalUpperBound2 = tTestPair$conf.int[2]
 
 mu = 0
 if (mu < intervalUpperBound2) {
-	print("H0 accepted")
+	print("H0 not rejected")
 } else {
 	print("H0 rejected")
 }
@@ -103,11 +103,11 @@ if (mu < intervalUpperBound2) {
 diff = x - y
 meanDiff = mean(diff)
 
-intervalUpperBound3 = t.test(diff, mu=0, alternative = "less", conf.level = 1-alpha)$conf.int[2]
+intervalUpperBound3 = t.test(diff, mu=0, alternative = "greater", conf.level = 1-alpha)$conf.int[2]
 
 #H0: meanDiff = 0 proti HA: meanDiff < 0
 if(meanDiff < intervalUpperBound3) {
-	print("H0 accepted")
+	print("H0 not rejected")
 } else {
 	print("H0 rejected")
 }
@@ -159,6 +159,11 @@ df = ((s2x/n1 + s2y/n2)^2) / (((s2x/n1)^2) / (n1-1) + ((s2y/n2)^2) / (n2-1))
 
 tCriticalValue = qt(1-alpha, df, lower.tail = TRUE)
 pVal = pt(TStat, df = df)
+
+
+################################################################################
+##################################### PART 3 #####################################
+################################################################################
 
 
 ## 3 I

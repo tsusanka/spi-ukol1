@@ -30,13 +30,13 @@ Type 'q()' to quit R.
 	One Sample t-test
 
 data:  x
-t = 1.601, df = 19, p-value = 0.1259
+t = 0.1533, df = 19, p-value = 0.8798
 alternative hypothesis: true mean is not equal to 10
 99 percent confidence interval:
-  9.729299 10.958698
+  9.054174 11.052953
 sample estimates:
 mean of x 
-   10.344 
+ 10.05356 
 
 > 
 > ## 1 Ia
@@ -52,12 +52,12 @@ mean of x
 > print("intervalLowerBound")
 [1] "intervalLowerBound"
 > print(intervalLowerBound)
-[1] 9.729299
+[1] 9.054174
 > intervalUpperBound = mean(x) + marginError
 > print("intervalUpperBound")
 [1] "intervalUpperBound"
 > print(intervalUpperBound)
-[1] 10.9587
+[1] 11.05295
 > 
 > ## 1 Ib
 > mu = 10
@@ -88,13 +88,13 @@ mean of x
 	One Sample t-test
 
 data:  x
-t = 1.601, df = 19, p-value = 0.06293
+t = 0.1533, df = 19, p-value = 0.4399
 alternative hypothesis: true mean is greater than 10
 99 percent confidence interval:
- 9.798366      Inf
+ 9.166464      Inf
 sample estimates:
 mean of x 
-   10.344 
+ 10.05356 
 
 > 
 > print("Second one-sided tests:")
@@ -104,13 +104,13 @@ mean of x
 	One Sample t-test
 
 data:  x
-t = 1.601, df = 19, p-value = 0.9371
+t = 0.1533, df = 19, p-value = 0.5601
 alternative hypothesis: true mean is less than 10
 99 percent confidence interval:
-     -Inf 10.88963
+     -Inf 10.94066
 sample estimates:
 mean of x 
-   10.344 
+ 10.05356 
 
 > 
 > 	## 1 IIa
@@ -144,10 +144,10 @@ mean of x
 > ################################################################################
 > 
 > n = 20;
-> alpha = 0.01
-> x = rnorm(n, mean=10, sd=1)
-> error = rnorm(n, mean=0.5, sd=0.8306624)
-> y = x + error
+> alpha = 0.01;
+> x = rnorm(n, mean=10, sd=1);
+> error = rnorm(n, mean=0.5, sd=0.8306624);
+> y = x + error;
 > 
 > tTestPair = t.test(x, y=y, paired = TRUE, alternative = "less", conf.level = 1-alpha)
 > print(tTestPair)
@@ -155,13 +155,13 @@ mean of x
 	Paired t-test
 
 data:  x and y
-t = -1.0957, df = 19, p-value = 0.1435
+t = -2.9151, df = 19, p-value = 0.00444
 alternative hypothesis: true difference in means is less than 0
 99 percent confidence interval:
-      -Inf 0.3054639
+        -Inf -0.05883785
 sample estimates:
 mean of the differences 
-             -0.2318007 
+              -0.456682 
 
 > 
 > ## 2 Ia
@@ -169,25 +169,25 @@ mean of the differences
 > 
 > mu = 0
 > if (mu < intervalUpperBound2) {
-+ 	print("H0 accepted")
++ 	print("H0 not rejected")
 + } else {
 + 	print("H0 rejected")
 + }
-[1] "H0 accepted"
+[1] "H0 rejected"
 > 
 > ## 2 Ib
 > diff = x - y
 > meanDiff = mean(diff)
 > 
-> intervalUpperBound3 = t.test(diff, mu=0, alternative = "less", conf.level = 1-alpha)$conf.int[2]
+> intervalUpperBound3 = t.test(diff, mu=0, alternative = "greater", conf.level = 1-alpha)$conf.int[2]
 > 
 > #H0: meanDiff = 0 proti HA: meanDiff < 0
 > if(meanDiff < intervalUpperBound3) {
-+ 	print("H0 accepted")
++ 	print("H0 not rejected")
 + } else {
 + 	print("H0 rejected")
 + }
-[1] "H0 accepted"
+[1] "H0 not rejected"
 > 
 > ## 2 II
 > 
@@ -202,13 +202,13 @@ mean of the differences
 	Two Sample t-test
 
 data:  x and y
-t = -2.0471, df = 43, p-value = 0.04679
+t = -1.9881, df = 43, p-value = 0.05319
 alternative hypothesis: true difference in means is not equal to 0
 99 percent confidence interval:
- -1.6271283  0.2223498
+ -1.924953  0.290580
 sample estimates:
 mean of x mean of y 
- 10.42648  11.12887 
+ 9.915085 10.732271 
 
 > 
 > ## 2 IIa
@@ -217,13 +217,13 @@ mean of x mean of y
 	Two Sample t-test
 
 data:  x and y
-t = -2.0471, df = 43, p-value = 0.0234
+t = -1.9881, df = 43, p-value = 0.02659
 alternative hypothesis: true difference in means is less than 0
 99 percent confidence interval:
-      -Inf 0.1266706
+      -Inf 0.1759636
 sample estimates:
 mean of x mean of y 
- 10.42648  11.12887 
+ 9.915085 10.732271 
 
 > 
 > ## 2 IIb
@@ -252,13 +252,13 @@ mean of x mean of y
 	Welch Two Sample t-test
 
 data:  x and y
-t = -3.5606, df = 40.231, p-value = 0.000968
+t = -7.2949, df = 34.868, p-value = 1.633e-08
 alternative hypothesis: true difference in means is not equal to 0
 99 percent confidence interval:
- -2.4672821 -0.3375134
+ -3.062071 -1.396830
 sample estimates:
 mean of x mean of y 
- 10.03148  11.43388 
+ 9.501137 11.730587 
 
 > 
 > s2x = sum( (x - mean(x))^2 ) / (length(x)-1)
@@ -272,6 +272,11 @@ mean of x mean of y
 > 
 > tCriticalValue = qt(1-alpha, df, lower.tail = TRUE)
 > pVal = pt(TStat, df = df)
+> 
+> 
+> ################################################################################
+> ##################################### PART 3 #####################################
+> ################################################################################
 > 
 > 
 > ## 3 I
@@ -295,12 +300,12 @@ mean of x mean of y
 > print("meanSingleton: ")
 [1] "meanSingleton: "
 > print(meanSingleton)
-[1] 0.275265
+[1] 0.316455
 > meanSedgewick = mean(time2)
 > print("meanSedgewick: ")
 [1] "meanSedgewick: "
 > print(meanSedgewick)
-[1] 0.39294
+[1] 0.474785
 > 
 > alpha = K / 100
 > t.test(time1, time2, paired = FALSE, var.equal = FALSE, conf.level = 1-alpha)
@@ -308,13 +313,13 @@ mean of x mean of y
 	Welch Two Sample t-test
 
 data:  time1 and time2
-t = -203.5311, df = 343.306, p-value < 2.2e-16
+t = -90.9102, df = 327.75, p-value < 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 94 percent confidence interval:
- -0.118766 -0.116584
+ -0.161617 -0.155043
 sample estimates:
 mean of x mean of y 
- 0.275265  0.392940 
+ 0.316455  0.474785 
 
 > 
 > ## 3 III
@@ -333,10 +338,10 @@ mean of x mean of y
 > print("meanSingleton2: ")
 [1] "meanSingleton2: "
 > print(meanSingleton2)
-[1] 0.27436
+[1] 0.319235
 > meanSedgewick2 = mean(time4)
 > print("meanSedgewick2: ")
 [1] "meanSedgewick2: "
 > print(meanSedgewick2)
-[1] 0.34704
+[1] 0.41145
 > 
