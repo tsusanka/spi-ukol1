@@ -128,14 +128,22 @@ pVal = pt(TStat, df = df)
 print(pVal)
 
 ####################### 2 III ##########################
-
+ 
 n1 = 20;
 n2 = 25;
 alpha = 0.01
 x=rnorm(n1, mean=10, sd=1.3)
 y=rnorm(n2, mean=11.28, sd=1.2)
-
+ 
 t.test(x, y=y, paired = FALSE, var.equal = FALSE, conf.level = 1-alpha)
+
+
+########### 2 III a ###########
+
+t.test(x, y=y, paired = FALSE, var.equal = FALSE, conf.level = 1-alpha, alternative="less")
+
+########### 2 III b ###########
+
 
 s2x = sum( (x - mean(x))^2 ) / (length(x)-1)
 s2y = sum( (y - mean(y))^2 ) / (length(y)-1)
@@ -144,13 +152,14 @@ sxY = sqrt(s2x/n1 + s2y/n2)
 
 TStat = (mean(x) - mean(y)) / sxY
 print(TStat)
-
+ 
 df = ((s2x/n1 + s2y/n2)^2) / (((s2x/n1)^2) / (n1-1) + ((s2y/n2)^2) / (n2-1)) 
 print(df)
-
+ 
 tCriticalValue = qt(1-alpha, df, lower.tail = TRUE)
 pVal = pt(TStat, df = df)
 print(pVal)
+
 
 ################################################################################
 ##################################### PART 3 #####################################
