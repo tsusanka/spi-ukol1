@@ -80,6 +80,7 @@ t.test(x, mu=10, alternative = "less", conf.level = 1-alpha);
 ##################################### PART 2 #####################################
 ################################################################################
 
+####################### 2 I ##########################
 n = 20;
 alpha = 0.01;
 x = rnorm(n, mean=10, sd=1);
@@ -87,32 +88,17 @@ error = rnorm(n, mean=0.5, sd=0.8306624);
 y = x + error;
 
 tTestPair = t.test(x, y=y, paired = TRUE, alternative = "less", conf.level = 1-alpha)
-print(tTestPair)
 
 ## 2 Ia
-intervalUpperBound2 = tTestPair$conf.int[2]
-
-mu = 0
-if (mu < intervalUpperBound2) {
-	print("H0 not rejected")
-} else {
-	print("H0 rejected")
-}
+print(tTestPair)
 
 ## 2 Ib
 diff = x - y
-meanDiff = mean(diff)
 
-intervalUpperBound3 = t.test(diff, mu=0, alternative = "greater", conf.level = 1-alpha)$conf.int[2]
+test = t.test(diff, y=y, paired=TRUE, alternative = "greater", conf.level = 1-alpha, mu=0)
+print(test)
 
-#H0: meanDiff = 0 proti HA: meanDiff < 0
-if(meanDiff < intervalUpperBound3) {
-	print("H0 not rejected")
-} else {
-	print("H0 rejected")
-}
-
-## 2 II
+####################### 2 II ##########################
 
 n1 = 20;
 n2 = 25;
@@ -132,13 +118,16 @@ s2y = sum( (y - mean(y))^2 ) / (length(y)-1)
 Sxy = sqrt( ((length(x)-1)*s2x + (length(y)-1)*s2y)   /  (length(x)+length(y) -2) )
 
 TStat = (mean(x) - mean(y)) / (Sxy * sqrt(1/length(x) + 1/length(y))) 
+print(TStat)
 df = length(x) + length(y) -2
+print(df)
 
 tCriticalValue = qt(1-alpha, df, lower.tail = TRUE)
 
 pVal = pt(TStat, df = df)
+print(pVal)
 
-## 2 III
+####################### 2 III ##########################
 
 n1 = 20;
 n2 = 25;
@@ -154,12 +143,14 @@ s2y = sum( (y - mean(y))^2 ) / (length(y)-1)
 sxY = sqrt(s2x/n1 + s2y/n2)
 
 TStat = (mean(x) - mean(y)) / sxY
+print(TStat)
 
 df = ((s2x/n1 + s2y/n2)^2) / (((s2x/n1)^2) / (n1-1) + ((s2y/n2)^2) / (n2-1)) 
+print(df)
 
 tCriticalValue = qt(1-alpha, df, lower.tail = TRUE)
 pVal = pt(TStat, df = df)
-
+print(pVal)
 
 ################################################################################
 ##################################### PART 3 #####################################
